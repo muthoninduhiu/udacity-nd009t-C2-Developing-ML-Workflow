@@ -1,7 +1,7 @@
 import json
 
 
-THRESHOLD = .93
+THRESHOLD = 0.9
 
 
 def lambda_handler(event, context):
@@ -13,18 +13,13 @@ def lambda_handler(event, context):
     
     # If our threshold is met, pass our data back out of the
     # Step Function, else, end the Step Function with an error
+   # If our threshold is met, pass our data back out of the Step Function
     if meets_threshold:
-        pass
+        return {
+            'statusCode': 200,
+            'body': {
+                "message": "💃🕺 Happy Dance! 🎉 Wohooo we passed the threshold!!"
+            }
+        }
     else:
         raise ValueError("THRESHOLD_CONFIDENCE_NOT_MET")
-        
-
-    return {
-        'statusCode': 200,
-        'body': {
-            "image_data": event['image_data'],
-            "s3_bucket": event['s3_bucket'],
-            "s3_key": event['s3_key'],
-            "inferences": event['inferences'],
-        }
-    }
